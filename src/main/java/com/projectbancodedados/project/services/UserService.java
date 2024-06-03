@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.projectbancodedados.project.entities.User;
 import com.projectbancodedados.project.repositories.UserRepository;
+import com.projectbancodedados.project.services.exception.ResourceNotFoundException;
 
 
 @Service
@@ -26,7 +27,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
